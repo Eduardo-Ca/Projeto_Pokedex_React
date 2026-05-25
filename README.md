@@ -1,21 +1,204 @@
-<<<<<<< HEAD
-# React + Vite
+# Pokédex React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Projeto de estudos desenvolvido para aprender React moderno construindo uma Pokédex completa utilizando dados reais da PokéAPI.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+# Objetivo do Projeto
 
-## React Compiler
+O objetivo desse projeto é aprender na prática:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React moderno
+- JavaScript ES6+
+- Consumo de APIs
+- Componentização
+- Gerenciamento de estado
+- Rotas
+- Persistência de dados
+- UI/UX
+- Organização de projeto
+- Responsividade
+- TailwindCSS
 
-## Expanding the ESLint configuration
+A ideia não é apenas fazer uma Pokédex funcional, mas entender como aplicações front-end reais são construídas.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
-# Projeto_Pokedex_React
-Projeto para treinar React
->>>>>>> 0b65a191691c764c0ae61a55bcde4710af0acd6e
+---
+
+# Tecnologias Utilizadas
+
+## Core
+
+- React
+- Vite
+- JavaScript
+- TailwindCSS
+- React Router DOM
+- Fetch API
+
+---
+
+# APIs
+
+## PokéAPI
+
+[https://pokeapi.co/](https://pokeapi.co/)
+
+Documentação:
+[https://pokeapi.co/docs/v2](https://pokeapi.co/docs/v2)
+
+---
+
+# Funcionalidades
+
+## Home
+
+- Listagem de Pokémons
+- Cards responsivos
+- Nome
+- Imagem
+- Tipo
+
+## Busca
+
+- Busca dinâmica por nome
+- Atualização em tempo real
+
+## Página de Detalhes
+
+- Nome
+- Imagem
+- Tipos
+- Altura
+- Peso
+- Habilidades
+- Status base
+
+## Favoritos
+
+- Adicionar favoritos
+- Remover favoritos
+- Persistência com localStorage
+
+## Responsividade
+
+- Mobile
+- Tablet
+- Desktop
+
+---
+
+# Conceitos Estudados
+
+## React
+
+- JSX
+- Componentes
+- Props
+- useState
+- useEffect
+- Renderização de listas
+- Hooks
+- Componentização
+- Re-render
+
+## JavaScript Moderno
+
+- Arrow Functions
+- Desestruturação
+- Spread Operator
+- Async/Await
+- Promises
+- Arrays e Objetos
+- Fetch API
+
+## Front-end
+
+- Flexbox
+- Grid
+- Responsividade
+- UI/UX
+- Organização de projeto
+
+---
+
+# Estrutura do Projeto
+
+```txt
+src/
+├── assets/
+├── components/
+├── pages/
+├── routes/
+├── services/
+├── hooks/
+├── utils/
+├── styles/
+│
+├── App.jsx
+└── main.jsx
+```
+
+---
+
+# Bibliotecas Planejadas
+
+## Base
+
+- react-router-dom
+- tailwindcss
+
+## Futuras Melhorias
+
+- TanStack Query
+- Zustand
+- React Hook Form
+- Zod
+
+---
+
+# Melhorias Futuras
+
+- Infinite Scroll
+- Skeleton Loading
+- Dark Mode
+- Filtro por Tipo
+- Animações
+- Toast Notifications
+- Performance Optimization
+- Testes
+- TypeScript
+
+---
+
+# Como Rodar o Projeto
+
+## Instalar dependências
+
+```bash
+npm install
+```
+
+## Rodar projeto
+
+```bash
+npm run dev
+```
+
+---
+
+# Objetivo Final
+
+Ao finalizar esse projeto, o objetivo é:
+
+- Entender React moderno
+- Consumir APIs reais
+- Construir interfaces responsivas
+- Organizar aplicações React profissionalmente
+- Aprender arquitetura front-end
+- Evoluir como desenvolvedor front-end
+
+---
+
+# Status do Projeto
+
+🚧 Em desenvolvimento
