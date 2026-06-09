@@ -2,7 +2,7 @@ export default function Switch({ checked, onChange }) {
   return (
     <button
       onClick={() => onChange(!checked)}
-      className={`w-12 h-6 flex items-center rounded-full p-1 transition ${
+      className={`hover:cursor-pointer w-12 h-6 flex items-center rounded-full p-1 transition ${
         checked ? "bg-green-500" : "bg-gray-600"
       }`}
     >
