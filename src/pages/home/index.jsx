@@ -1,56 +1,22 @@
-import { useState, useEffect, useRef, useCallback } from "react";
 import Sidebar from "/src/components/sidebar";
 import PokemonCard from "/src/components/PokemonCard";
 import ScrollToTop from "/src/components/ScrollToTop";
-import api from "/src/services/api";
+import SearchBar from "/src/components/ui/SearchBar";
+import PokemonSkeleton from "/src/components/PokemonSkeleton";
+import { PokemonHome } from "/src/hooks/PokemonHome";
 
 export default function Home() {
-  const [pokemons, setPokemons] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [offset, setOffset] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
-
-  const observer = useRef();
-  const LIMIT = 24;
-
-  const loadMorePokemons = useCallback(async () => {
-    if (loading || !hasMore) return;
-
-    try {
-      setLoading(true);
-      setError(null);
-      const data = await api.getPokemonPage(LIMIT, offset);
-
-      setPokemons((prev) => [...prev, ...data.results]);
-      setHasMore(data.hasMore);
-      setOffset((prev) => prev + LIMIT);
-    } catch (err) {
-      setError("Não foi possível carregar os Pokémons.");
-    } finally {
-      setLoading(false);
-    }
-  }, [offset, loading, hasMore]);
-
-  useEffect(() => {
-    loadMorePokemons();
-  }, []);
-
-  const lastPokemonElementRef = useCallback(
-    (node) => {
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
-
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          loadMorePokemons();
-        }
-      });
-
-      if (node) observer.current.observe(node);
-    },
-    [loading, hasMore, loadMorePokemons],
-  );
+  const {
+    pokemons,
+    loading,
+    error,
+    hasMore,
+    searchQuery,
+    searchResults,
+    isSearching,
+    lastPokemonElementRef,
+    handleSearchChange,
+  } = PokemonHome();
 
   return (
     <div className="flex min-h-screen bg-app-bg">
@@ -64,6 +30,13 @@ export default function Home() {
           <p className="text-text-muted mt-1">Explore o mundo Pokémon.</p>
         </header>
 
+        <SearchBar
+          value={searchQuery}
+          onChange={handleSearchChange}
+          placeholder="Buscar Pokémon por nome ou ID..."
+          className="mb-8"
+        />
+
         {error && (
           <div className="bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-2xl text-center max-w-md mx-auto mb-6">
             {error}
@@ -71,25 +44,33 @@ export default function Home() {
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {pokemons.map((pokemon, index) => {
-            const isLastElement = pokemons.length === index + 1;
-            return (
-              <PokemonCard
-                key={pokemon.id}
-                pokemon={pokemon}
-                ref={isLastElement ? lastPokemonElementRef : null}
-              />
-            );
-          })}
+          {isSearching &&
+            searchResults.map((pokemon) => (
+              <PokemonCard key={pokemon.id} pokemon={pokemon} />
+            ))}
+
+          {!isSearching &&
+            pokemons.map((pokemon, index) => {
+              const isLastElement = pokemons.length === index + 1;
+              return (
+                <PokemonCard
+                  key={pokemon.id}
+                  pokemon={pokemon}
+                  ref={isLastElement ? lastPokemonElementRef : null}
+                />
+              );
+            })}
 
           {loading &&
-            Array.from({ length: 8 }).map((_, i) => (
-              <PokemonCardSkeleton key={i} />
+            Array.from({ length: isSearching ? 4 : 8 }).map((_, i) => (
+              <PokemonSkeleton key={i} />
             ))}
         </div>
 
-        {!hasMore && !loading && (
-          <p className="text-center text-text-muted mt-8 font-medium">...</p>
+        {!hasMore && !loading && !isSearching && (
+          <p className="text-center text-text-muted mt-8 font-medium">
+            Você chegou ao fim da Pokédex!
+          </p>
         )}
 
         <ScrollToTop />
