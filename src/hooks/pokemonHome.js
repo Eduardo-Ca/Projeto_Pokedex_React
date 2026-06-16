@@ -12,6 +12,11 @@ export function PokemonHome() {
   const [allPokemonNames, setAllPokemonNames] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
 
+  const [favorites, setFavorites] = useState(() => {
+    const saved = localStorage.getItem("pokedex_favorites");
+    return saved ? JSON.parse(saved) : [];
+  });
+
   const observer = useRef();
   const LIMIT = 24;
 
@@ -25,7 +30,6 @@ export function PokemonHome() {
 
       setPokemons((prev) => {
         const existingIds = new Set(prev.map((p) => p.id));
-
         const newPokemons = data.results.filter((p) => !existingIds.has(p.id));
         return [...prev, ...newPokemons];
       });
@@ -134,6 +138,19 @@ export function PokemonHome() {
     }
   };
 
+  const toggleFavorite = useCallback((pokemonId) => {
+    setFavorites((prevFavorites) => {
+      let updated;
+      if (prevFavorites.includes(pokemonId)) {
+        updated = prevFavorites.filter((id) => id !== pokemonId);
+      } else {
+        updated = [...prevFavorites, pokemonId];
+      }
+      localStorage.setItem("pokedex_favorites", JSON.stringify(updated));
+      return updated;
+    });
+  }, []);
+
   const isSearching = searchQuery.trim() !== "";
 
   return {
@@ -145,6 +162,8 @@ export function PokemonHome() {
     searchResults,
     isSearching,
     lastPokemonElementRef,
-    handleSearchChange
+    handleSearchChange,
+    favorites,
+    toggleFavorite
   };
 }
