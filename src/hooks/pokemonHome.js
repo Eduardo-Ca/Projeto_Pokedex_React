@@ -36,8 +36,8 @@ export function PokemonHome() {
 
       setHasMore(data.hasMore);
       setOffset((prev) => prev + LIMIT);
-    } catch {
-      setError("Não foi possível carregar os Pokémons.");
+    } catch (err) {
+      setError(err.message || "Não foi possível carregar os Pokémons.");
     } finally {
       setLoading(false);
     }
@@ -48,6 +48,7 @@ export function PokemonHome() {
 
     const initializeData = async () => {
       try {
+        setError(null);
         const names = await api.getAllPokemonNames();
         if (!active) return;
         setAllPokemonNames(names);
@@ -55,8 +56,8 @@ export function PokemonHome() {
         if (pokemons.length === 0) {
           await loadMorePokemons();
         }
-      } catch {
-        console.error("Erro ao carregar lista de busca.");
+      } catch (err) {
+        if (active) setError(err.message || "Erro ao carregar lista inicial.");
       }
     };
 
@@ -101,8 +102,8 @@ export function PokemonHome() {
         if (isCurrentRequest) {
           setSearchResults(detailedResults);
         }
-      } catch {
-        if (isCurrentRequest) setError("Erro ao buscar detalhes do Pokémon.");
+      } catch (err) {
+        if (isCurrentRequest) setError(err.message || "Erro ao buscar detalhes do Pokémon.");
       } finally {
         if (isCurrentRequest) setLoading(false);
       }

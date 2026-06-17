@@ -24,6 +24,12 @@ export default function Home() {
     toggleFavorite,
   } = PokemonHome();
 
+  if (error && !isFavoritesPage) {
+    throw new Error(
+      typeof error === "string" ? error : "Erro ao carregar os dados da API.",
+    );
+  }
+
   const term = searchQuery.toLowerCase().trim();
 
   const displayedPokemons = isFavoritesPage
